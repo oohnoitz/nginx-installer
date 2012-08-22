@@ -23,15 +23,16 @@ nginx-installer is a bash script designed to ease the process of compiling nginx
 ##List of Installable Addons
 This is a list of modules and patches that could be applied automatically with this script. If you have any requests, feel free to contribute or ask.
 ###Modules
-- ngx_cache_purge ~ FRiCKLE (https://github.com/FRiCKLE/ngx_cache_purge/)
-
+- ngx_cache_purge ~ FRiCKLE https://github.com/FRiCKLE/ngx_cache_purge/
+- ngx_drizzle ~ chaoslawful https://github.com/chaoslawful/drizzle-nginx-module/
+- ngx_echo ~ agentzh https://github.com/agentzh/echo-nginx-module/
+- ngx_postgres ~ FRiCKLE https://github.com/FRiCKLE/ngx_postgres/
+- ngx_set_misc ~ agentzh https://github.com/agentzh/set-misc-nginx-module/
 ###Patches
-- spdy ~ nginx development team (http://nginx.org/patches/spdy/patch.spdy.txt)
+- spdy ~ nginx http://nginx.org/patches/spdy/
   * This requires OpenSSL 1.0.1 installed on the server.
   * If you wish to compile nginx with the OpenSSL source, do the following:
-      1. Download the latest version of OpenSSL.
-        ```$ wget http://openssl.org/source/openssl-1.0.1c.tar.gz```
-      2. Extract the source file.
-        ```$ tar zxvf openssl-1.0.1c.tar.gz```
+      1. Download the latest version of OpenSSL. ```$ wget http://openssl.org/source/openssl-1.0.1c.tar.gz```
+      2. Extract the source file. ```$ tar zxvf openssl-1.0.1c.tar.gz```
       3. Add ```--with-openssl=/path/to/source/openssl-1.0.1c``` to the end of ```CONFIGURE_PARAMS``` in the bash script.
     

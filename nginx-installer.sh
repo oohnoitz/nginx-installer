@@ -11,17 +11,45 @@ if [[ $EUID -ne 0 ]] ; then
 	exit 1
 fi
 
-# misc functions
-function installSource() {
-	source=${2}
-	for i in ${elements[@]} ; do
-		if [ $i == $source ] ; then
-			echo 1 # work-around
+# functions for patch application
+function patch_enabled() {
+	for i in ${PATCHES[@]} ; do
+		if [ $i == ${1} ] ; then
+			echo 1 # work-around, bash isn't accepting return value
 			return 1
 		fi
 	done
-	return 0;
+	return 0
 }
+
+# functions for module installation
+function module_enabled() {
+	for i in ${MODULES[@]} ; do
+		if [ $i == ${1} ] ; then
+			echo 1 # work-around, bash isn't accepting return value
+			return 1
+		fi
+	done
+	return 0
+}
+
+function install_module() {
+	if [ $(module_enabled "${1}") ] ; then
+		echo -n "Downloading ${1} module... "
+		wget -q --no-check-certificate "${2}" -O "modules/${1}.zip"
+		if [ ! -s "modules/${1}.zip" ] ; then
+			echo "Failed!"
+			rm modules/${1}.zip
+			echo "Skipping installation of ${1} module..."
+		else
+			echo "Done!"
+			unzip modules/${1}.zip -d modules/${1}/
+			module_source_directory=`find modules/${1}/* | head -1`
+			CONFIGURE_PARAMS="${CONFIGURE_PARAMS} --add-module=${module_source_directory}"
+		fi
+	fi
+}
+
 
 # clean-up work directory
 NGINX_VERSION="nginx-${1}"
@@ -29,6 +57,7 @@ if [ -d "${WORKDIR}" ] ; then
 	rm -Rf ${WORKDIR}
 fi
 mkdir ${WORKDIR}
+
 
 # download source file
 echo -n "Downloading ${NGINX_VERSION}... "
@@ -41,18 +70,21 @@ if [ ! -s "${WORKDIR}/nginx.tar.gz" ] ; then
 fi
 echo "Done!"
 
+
 # extract and change directory to source
 echo "Extracting ${NGINX_VERSION}..."
 tar zxvf ${WORKDIR}/nginx.tar.gz -C ${WORKDIR}/
 cd ${WORKDIR}/${NGINX_VERSION}/
 
+
 # make folders to hold modules and patches
 mkdir modules
 mkdir patches
 
+
 # download and apply patches
 # ++spdy
-if [ $(installSource "${PATCHES}" "spdy") ] ; then
+if [ $(patch_enabled "spdy") ] ; then
 	echo -n "Downloading Latest SPDY Patch... "
 	wget -q http://nginx.org/patches/spdy/patch.spdy.txt -O patches/patch.spdy.txt
 	if [ ! -s "patches/patch.spdy.txt" ] ; then
@@ -67,32 +99,30 @@ if [ $(installSource "${PATCHES}" "spdy") ] ; then
 	fi
 fi
 
-# download and add modules to configure params
-# ++ngx_cache_purge - FRiCKLE (https://github.com/FRiCKLE/ngx_cache_purge/)
-if [ $(installSource "${MODULES}" "ngx_cache_purge") ] ; then
-	echo -n "Downloading ngx_cache_purge module... "
-	wget -q --no-check-certificate https://github.com/FRiCKLE/ngx_cache_purge/zipball/master -O modules/ngx_cache_purge.zip
-	if [ ! -s "modules/ngx_cache_purge.zip" ]; then
-		echo "Failed!"
-		rm modules/ngx_cache_purge.zip
-		echo "Skipping ngx_cache_purge module installation..."
-	else
-		echo "Done!"
-		unzip modules/ngx_cache_purge.zip -d modules/ngx_cache_purge/
-		module_ngx_cache_purge=`find modules/ngx_cache_purge/* | head -1`
-		CONFIGURE_PARAMS="${CONFIGURE_PARAMS} --add-module=${module_ngx_cache_purge}"
-	fi
-fi
 
+# download and add modules to configure params
+# ++ngx_cache_purge - FRiCKLE
+install_module "ngx_cache_purge" "https://github.com/FRiCKLE/ngx_cache_purge/zipball/master"
+# ++ngx_drizzle - chaoslawful
+install_module "ngx_drizzle" "https://github.com/chaoslawful/drizzle-nginx-module/zipball/master"
+# ++ngx_echo - agentzh
+install_module "ngx_echo" "https://github.com/agentzh/echo-nginx-module/zipball/master"
+# ++ngx_postgres - FRiCKLE
+install_module "ngx_postgres" "https://github.com/FRiCKLE/ngx_postgres/zipball/master"
+# ++ngx_set_misc - agentzh
+install_module "ngx_set_misc" "https://github.com/agentzh/set-misc-nginx-module/zipball/master"
+
+
+# configure, compile, and install
 echo "Configuring ${NGINX_VERSION}..."
 ./configure ${CONFIGURE_PARAMS}
-
 echo "Compiling ${NGINX_VERSION}..."
 make
-
 echo "Installing ${NGINX_VERSION}..."
 make install
 
+
+# if possible, restart nginx
 if [ -a "/etc/init.d/nginx" ] ; then
 	echo "Starting ${NGINX_VERSION}..."
 	/etc/init.d/nginx restart
