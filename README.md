@@ -20,7 +20,7 @@ nginx-installer is a bash script designed to ease the process of compiling nginx
   ```
   The ```<version>``` parameter should be replaced with the actual version number of nginx you wish to compile and install. For example, ```sudo ./nginx-installer.sh 1.3.5``` would compile and install nginx-1.3.5 onto your server.
 
-##List of Installable Addons
+##List of Installable Addons Included
 This is a list of modules and patches that could be applied automatically with this script. If you have any requests, feel free to contribute or ask.
 ###Modules
 - ngx_cache_purge ~ FRiCKLE https://github.com/FRiCKLE/ngx_cache_purge/
@@ -28,6 +28,7 @@ This is a list of modules and patches that could be applied automatically with t
 - ngx_echo ~ agentzh https://github.com/agentzh/echo-nginx-module/
 - ngx_postgres ~ FRiCKLE https://github.com/FRiCKLE/ngx_postgres/
 - ngx_set_misc ~ agentzh https://github.com/agentzh/set-misc-nginx-module/
+
 ###Patches
 - spdy ~ nginx http://nginx.org/patches/spdy/
   * This requires OpenSSL 1.0.1 installed on the server.
