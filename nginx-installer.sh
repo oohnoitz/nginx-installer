@@ -1,15 +1,15 @@
 #!/bin/bash
 CONFIGURE_PARAMS="--with-debug --with-ipv6 --with-http_realip_module --with-http_ssl_module"
-MODULES=("ngx_cache_purge")
+MODULES=("ngx_cache_purge" "ngx_memc")
 PATCHES=("spdy")
 WORKDIR="nginx"
 
 # check if user is root and params are passed
 [ $# -eq 0 ] && { echo "Usage: $0 <version>"; exit; }
-if [[ $EUID -ne 0 ]] ; then
-	echo "Error: This script must be run with root access to install nginx." 
-	exit 1
-fi
+#if [[ $EUID -ne 0 ]] ; then
+#	echo "Error: This script must be run with root access to install nginx." 
+#	exit 1
+#fi
 
 # functions for patch application
 function patch_enabled() {
@@ -101,31 +101,36 @@ fi
 
 
 # download and add modules to configure params
-# ++ngx_cache_purge - FRiCKLE
+# +ngx_cache_purge - FRiCKLE
 install_module "ngx_cache_purge" "https://github.com/FRiCKLE/ngx_cache_purge/zipball/master"
-# ++ngx_drizzle - chaoslawful
+# +ngx_drizzle - chaoslawful
 install_module "ngx_drizzle" "https://github.com/chaoslawful/drizzle-nginx-module/zipball/master"
-# ++ngx_echo - agentzh
+# +ngx_echo - agentzh
 install_module "ngx_echo" "https://github.com/agentzh/echo-nginx-module/zipball/master"
-# ++ngx_postgres - FRiCKLE
+# +ngx_memc - agentzh
+install_module "ngx_memc" "https://github.com/agentzh/memc-nginx-module/zipball/master"
+# +ngx_mongo - simpl
+install_module "ngx_mongo" "https://github.com/simpl/ngx_mongo/zipball/master"
+# +ngx_postgres - FRiCKLE
 install_module "ngx_postgres" "https://github.com/FRiCKLE/ngx_postgres/zipball/master"
-# ++ngx_set_misc - agentzh
+# +ngx_redis2 - agentzh
+install_module "ngx_redis2" "https://github.com/agentzh/redis2-nginx-module/zipball/master"
+# +ngx_set_misc - agentzh
 install_module "ngx_set_misc" "https://github.com/agentzh/set-misc-nginx-module/zipball/master"
 
 
-# configure, compile, and install
 echo "Configuring ${NGINX_VERSION}..."
 ./configure ${CONFIGURE_PARAMS}
+
 echo "Compiling ${NGINX_VERSION}..."
 make
+
 echo "Installing ${NGINX_VERSION}..."
 make install
 
-
-# if possible, restart nginx
-if [ -a "/etc/init.d/nginx" ] ; then
-	echo "Starting ${NGINX_VERSION}..."
-	/etc/init.d/nginx restart
-else
+echo "Starting ${NGINX_VERSION}..."
+if [ ! -a "/etc/init.d/nginx" ] ; then
 	echo "Error: You are missing the init script to start, stop, and restart nginx."
+	exit 0
 fi
+/etc/init.d/nginx restart

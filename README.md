@@ -26,7 +26,10 @@ This is a list of modules and patches that could be applied automatically with t
 - ngx_cache_purge ~ FRiCKLE https://github.com/FRiCKLE/ngx_cache_purge/
 - ngx_drizzle ~ chaoslawful https://github.com/chaoslawful/drizzle-nginx-module/
 - ngx_echo ~ agentzh https://github.com/agentzh/echo-nginx-module/
+- ngx_memc ~ agentzh https://github.com/agentzh/memc-nginx-module/
+- ngx_mongo ~ simpl https://github.com/simpl/ngx_mongo/
 - ngx_postgres ~ FRiCKLE https://github.com/FRiCKLE/ngx_postgres/
+- ngx_redis2 ~ agentzh https://github.com/agentzh/redis2-nginx-module/
 - ngx_set_misc ~ agentzh https://github.com/agentzh/set-misc-nginx-module/
 
 ###Patches
