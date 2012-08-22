@@ -1,15 +1,15 @@
 #!/bin/bash
 CONFIGURE_PARAMS="--with-debug --with-ipv6 --with-http_realip_module --with-http_ssl_module"
-MODULES=("ngx_cache_purge" "ngx_memc")
+MODULES=("ngx_cache_purge")
 PATCHES=("spdy")
 WORKDIR="nginx"
 
 # check if user is root and params are passed
 [ $# -eq 0 ] && { echo "Usage: $0 <version>"; exit; }
-#if [[ $EUID -ne 0 ]] ; then
-#	echo "Error: This script must be run with root access to install nginx." 
-#	exit 1
-#fi
+if [[ $EUID -ne 0 ]] ; then
+	echo "Error: This script must be run with root access to install nginx." 
+	exit 1
+fi
 
 # functions for patch application
 function patch_enabled() {
