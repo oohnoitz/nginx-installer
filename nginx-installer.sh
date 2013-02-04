@@ -7,7 +7,7 @@ WORKDIR="nginx"
 # check if user is root and params are passed
 [ $# -eq 0 ] && { echo "Usage: $0 <version>"; exit; }
 if [[ $EUID -ne 0 ]] ; then
-	echo "Error: This script must be run with root access to install nginx." 
+	echo "Error: This script must be run with root access to install nginx."
 	exit 1
 fi
 
@@ -94,8 +94,9 @@ if [ $(patch_enabled "spdy") ] ; then
 	else
 		echo "Done!"
 		echo "Patching ${NGINX_VERSION} with SPDY support..."
-		patch -p0 < patches/patch.spdy.txt
+		patch -p1 < patches/patch.spdy.txt
 		echo "Patched ${NGINX_VERSION} with SPDY support."
+		CONFIGURE_PARAMS="${CONFIGURE_PARAMS} --with-http_spdy_module"
 	fi
 fi
 
