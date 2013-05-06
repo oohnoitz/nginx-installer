@@ -1,0 +1,27 @@
+#Rename this nginx.conf and place it in /etc/init/ to make an Upstart entry for nginx
+#ie so you can go "sudo service nginx start/stop/restart"
+
+# nginx
+
+description "nginx http daemon"
+author "Wohlfe <https://github.com/Wohlfe>"
+
+start on (filesystem and net-device-up IFACE=lo)
+stop on runlevel [!2345]
+
+env DAEMON=/usr/local/nginx/sbin/nginx
+env PID=/usr/local/nginx/logs/nginx.pid
+
+expect fork
+respawn
+respawn limit 10 5
+#oom never
+
+pre-start script
+ $DAEMON -t
+ if [ $? -ne 0 ]
+ then exit $?
+ fi
+end script
+
+exec $DAEMON
