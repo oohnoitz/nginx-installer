@@ -1,7 +1,7 @@
 #!/bin/bash
-CONFIGURE_PARAMS="--with-debug --with-ipv6 --with-http_realip_module --with-http_ssl_module"
+CONFIGURE_PARAMS="--with-debug --with-ipv6 --with-http_realip_module --with-http_ssl_module --with-http_spdy_module"
 MODULES=("ngx_cache_purge")
-PATCHES=("spdy")
+PATCHES=("")
 WORKDIR="nginx"
 
 # check if user is root and params are passed

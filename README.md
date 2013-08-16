@@ -31,12 +31,9 @@ This is a list of modules and patches that could be applied automatically with t
 - ngx_postgres ~ FRiCKLE https://github.com/FRiCKLE/ngx_postgres/
 - ngx_redis2 ~ agentzh https://github.com/agentzh/redis2-nginx-module/
 - ngx_set_misc ~ agentzh https://github.com/agentzh/set-misc-nginx-module/
-
-###Patches
-- spdy ~ nginx http://nginx.org/patches/spdy/
+- ngx_http_spdy_module ~ nginx http://nginx.org/en/docs/modules/ngx_http_spdy_module
   * This requires OpenSSL 1.0.1 installed on the server.
   * If you wish to compile nginx with the OpenSSL source, do the following:
-      1. Download the latest version of OpenSSL. ```$ wget http://openssl.org/source/openssl-1.0.1c.tar.gz```
-      2. Extract the source file. ```$ tar zxvf openssl-1.0.1c.tar.gz```
-      3. Add ```--with-openssl=/path/to/source/openssl-1.0.1c``` to the end of ```CONFIGURE_PARAMS``` in the bash script.
-    
+      1. Download the latest version of OpenSSL. ```$ wget http://openssl.org/source/openssl-1.0.1e.tar.gz```
+      2. Extract the source file. ```$ tar zxvf openssl-1.0.1e.tar.gz```
+      3. Add ```--with-openssl=/path/to/source/openssl-1.0.1e``` to the end of ```CONFIGURE_PARAMS``` in the bash script.
