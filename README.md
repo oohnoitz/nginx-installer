@@ -34,4 +34,5 @@ This is an extensive list of modules that can be retrieved with the included scr
 - **ngx_mongo** ~ simpl https://github.com/simpl/ngx_mongo/
 - **ngx_postgres** ~ FRiCKLE https://github.com/FRiCKLE/ngx_postgres/
 - **ngx_redis2** ~ agentzh https://github.com/agentzh/redis2-nginx-module/
+- **ngx_rtmp** ~ arut https://github.com/arut/nginx-rtmp-module/
 - **ngx_set_misc** ~ agentzh https://github.com/agentzh/set-misc-nginx-module/

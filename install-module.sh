@@ -32,6 +32,9 @@ function download_module() {
     ngx_redis2)
       link="https://github.com/agentzh/redis2-nginx-module/zipball/master"
       ;;
+    ngx_rtmp)
+      link="https://github.com/arut/nginx-rtmp-module/zipball/master"
+      ;;
     ngx_set_misc)
       link="https://github.com/agentzh/set-misc-nginx-module/zipball/master"
       ;;
