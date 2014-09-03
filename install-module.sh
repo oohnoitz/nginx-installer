@@ -50,9 +50,6 @@ function download_module() {
     ngx_mod_zip)
       link="https://github.com/evanmiller/mod_zip/archive/master"
       ;;
-    ngx_modsecurity)
-      link="https://github.com/SpiderLabs/ModSecurity/archive/master"
-      ;;
     *)
       echo "Error: Invalid Module"
       exit 1
