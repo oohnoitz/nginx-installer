@@ -38,7 +38,21 @@ function download_module() {
     ngx_set_misc)
       link="https://github.com/agentzh/set-misc-nginx-module/zipball/master"
       ;;
-
+    ngx_ench_memcache)
+      link="https://github.com/bpaquet/ngx_http_enhanced_memcached_module/archive/master"
+      ;;
+    ngx_devel_kit)
+      link="https://github.com/simpl/ngx_devel_kit/archive/master"
+      ;;
+    ngx_sphinx2_search)
+      link="https://github.com/reeteshranjan/sphinx2-nginx-module/archive/master"
+      ;;
+    ngx_mod_zip)
+      link="https://github.com/evanmiller/mod_zip/archive/master"
+      ;;
+    ngx_modsecurity)
+      link="https://github.com/SpiderLabs/ModSecurity/archive/master"
+      ;;
     *)
       echo "Error: Invalid Module"
       exit 1
