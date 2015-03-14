@@ -11,7 +11,7 @@ This installer is a simple bash script written to ease the entire process of com
   3. `$ sudo ./install-module.sh <module>`
 
      The `<module>` parameter should be replaced with the name of the module in the list below.
-     
+
   *Note: These modules will need to be redownloaded with the script again. However, they will rename between each installation.*
 
 4. **Save Patches**
@@ -28,11 +28,16 @@ This installer is a simple bash script written to ease the entire process of com
 This is an extensive list of modules that can be retrieved with the included script which will be applied to the installation automatically. If you have any requests, feel free to contribute or ask.
 
 - **ngx_cache_purge** ~ FRiCKLE https://github.com/FRiCKLE/ngx_cache_purge/
+- **ngx_devel_kit** ~ simpl https://github.com/simpl/ngx_devel_kit/
 - **ngx_drizzle** ~ chaoslawful https://github.com/chaoslawful/drizzle-nginx-module/
 - **ngx_echo** ~ agentzh https://github.com/agentzh/echo-nginx-module/
+- **ngx_ench_memcache** ~ bpaquet https://github.com/bpaquet/ngx_http_enhanced_memcached_module/
+- **ngx_headers_more** ~ openresty https://github.com/openresty/headers-more-nginx-module/
 - **ngx_memc** ~ agentzh https://github.com/agentzh/memc-nginx-module/
+- **ngx_mod_zip** ~ evanmiller https://github.com/evanmiller/mod_zip/
 - **ngx_mongo** ~ simpl https://github.com/simpl/ngx_mongo/
 - **ngx_postgres** ~ FRiCKLE https://github.com/FRiCKLE/ngx_postgres/
 - **ngx_redis2** ~ agentzh https://github.com/agentzh/redis2-nginx-module/
 - **ngx_rtmp** ~ arut https://github.com/arut/nginx-rtmp-module/
 - **ngx_set_misc** ~ agentzh https://github.com/agentzh/set-misc-nginx-module/
+- **ngx_sphinx2_search** ~ reeteshranjan https://github.com/reeteshranjan/sphinx2-nginx-module/
