@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONFIGURE_PARAMS="--with-debug --with-ipv6 --with-http_realip_module --with-http_ssl_module --with-http_spdy_module --with-http_gzip_static_module"
+CONFIGURE_PARAMS="--with-debug --with-ipv6 --with-http_realip_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module"
 WORKDIR="nginx"
 
 # is user root? are params passed?
