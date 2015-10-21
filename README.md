@@ -27,6 +27,7 @@ This installer is a simple bash script written to ease the entire process of com
 ### List of Installable Modules
 This is an extensive list of modules that can be retrieved with the included script which will be applied to the installation automatically. If you have any requests, feel free to contribute or ask.
 
+- **ngx_brotli** ~ Google https://github.com/google/ngx_brotli/
 - **ngx_cache_purge** ~ FRiCKLE https://github.com/FRiCKLE/ngx_cache_purge/
 - **ngx_devel_kit** ~ simpl https://github.com/simpl/ngx_devel_kit/
 - **ngx_drizzle** ~ chaoslawful https://github.com/chaoslawful/drizzle-nginx-module/

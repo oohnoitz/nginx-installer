@@ -11,6 +11,9 @@ fi
 function download_module() {
   link=""
   case "${1}" in
+    ngx_brotli)
+      link="https://github.com/google/ngx_brotli/zipball/master"
+      ;;
     ngx_cache_purge)
       link="https://github.com/FRiCKLE/ngx_cache_purge/zipball/master"
       ;;
