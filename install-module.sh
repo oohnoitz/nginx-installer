@@ -63,8 +63,13 @@ function fetch() {
   esac
 
   mkdir -p ${WORKDIR}
-  echo "Downloading: ${1} ...  "
-  git clone --recursive ${repo} ${WORKDIR}/${1}
+  if [ -d "${WORKDIR}/${1}" ] ; then
+    echo "Updating: ${1} ..."
+    git --git-dir="${WORKDIR}/${1}/.git" --work-tree="${WORKDIR}/${1}" reset --hard origin/master
+  else
+    echo "Downloading: ${1} ..."
+    git clone --recursive ${repo} ${WORKDIR}/${1}
+  fi
 }
 
 fetch ${1}
