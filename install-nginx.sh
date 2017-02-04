@@ -11,6 +11,7 @@ if [[ $EUID -ne 0 ]] ; then
 fi
 
 # etc
+CPU_CORES=`getconf _NPROCESSORS_ONLN`
 NGINX_VERSION="nginx-${1}"
 if [ -d "${WORKDIR}" ] ; then
   rm -Rf ${WORKDIR}
@@ -46,11 +47,9 @@ cd ${WORKDIR}/${NGINX_VERSION}
 # install extra stuff
 function install_extra() {
   if [ -d ${1} ] ; then
-    echo "lol"
     for file in ${1}/* ; do
       if [ ${1} == "modules" ] ; then
-        unzip $file -d ${1}/$(basename $file ".zip")
-        MODULE=`find ${1}/$(basename $file ".zip")/* | head -1`
+        MODULE=$file
         CONFIGURE_PARAMS="${CONFIGURE_PARAMS} --add-module=${MODULE}"
       fi
 
@@ -66,11 +65,11 @@ install_extra "modules"
 install_extra "patches"
 
 # configure
-echo "Configuring..."
+echo "Configuring... ${CONFIGURE_PARAMS}"
 ./configure ${CONFIGURE_PARAMS}
 
 echo "Compiling..."
-make
+make -j${CPU_CORES}
 
 echo "Installing..."
 make install

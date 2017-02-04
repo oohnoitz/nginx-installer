@@ -2,59 +2,59 @@
 
 WORKDIR="modules"
 
-[ $# -eq 0 ] && { echo "Usage: $0 <module>"; exit; }
-if [[ $EUID -ne 0 ]] ; then
-  echo "Error: This script must be run with root access to install nginx."
+which git &> /dev/null
+if [ $? -ne 0 ] ; then
+  echo "Error: This script requires 'git' to be installed on the system."
   exit 1
 fi
 
-function download_module() {
-  link=""
+function fetch() {
+  repo=""
   case "${1}" in
     ngx_brotli)
-      link="https://github.com/google/ngx_brotli/zipball/master"
+      repo="https://github.com/google/ngx_brotli.git"
       ;;
     ngx_cache_purge)
-      link="https://github.com/FRiCKLE/ngx_cache_purge/zipball/master"
+      repo="https://github.com/FRiCKLE/ngx_cache_purge.git"
       ;;
     ngx_devel_kit)
-      link="https://github.com/simpl/ngx_devel_kit/archive/master"
+      repo="https://github.com/simpl/ngx_devel_kit.git"
       ;;
     ngx_drizzle)
-      link="https://github.com/chaoslawful/drizzle-nginx-module/zipball/master"
+      repo="https://github.com/chaoslawful/drizzle-nginx-module.git"
       ;;
     ngx_echo)
-      link="https://github.com/agentzh/echo-nginx-module/zipball/master"
+      repo="https://github.com/agentzh/echo-nginx-module.git"
       ;;
     ngx_ench_memcache)
-      link="https://github.com/bpaquet/ngx_http_enhanced_memcached_module/archive/master"
+      repo="https://github.com/bpaquet/ngx_http_enhanced_memcached_module.git"
       ;;
     ngx_headers_more)
-      link="https://github.com/openresty/headers-more-nginx-module/archive/master"
+      repo="https://github.com/openresty/headers-more-nginx-module.git"
       ;;
     ngx_memc)
-      link="https://github.com/agentzh/memc-nginx-module/zipball/master"
+      repo="https://github.com/agentzh/memc-nginx-module.git"
       ;;
     ngx_mod_zip)
-      link="https://github.com/evanmiller/mod_zip/archive/master"
+      repo="https://github.com/evanmiller/mod_zip.git"
       ;;
     ngx_mongo)
-      link="https://github.com/simpl/ngx_mongo/zipball/master"
+      repo="https://github.com/simpl/ngx_mongo.git"
       ;;
     ngx_postgres)
-      link="https://github.com/FRiCKLE/ngx_postgres/zipball/master"
+      repo="https://github.com/FRiCKLE/ngx_postgres.git"
       ;;
     ngx_redis2)
-      link="https://github.com/agentzh/redis2-nginx-module/zipball/master"
+      repo="https://github.com/agentzh/redis2-nginx-module.git"
       ;;
     ngx_rtmp)
-      link="https://github.com/arut/nginx-rtmp-module/zipball/master"
+      repo="https://github.com/arut/nginx-rtmp-module.git"
       ;;
     ngx_set_misc)
-      link="https://github.com/agentzh/set-misc-nginx-module/zipball/master"
+      repo="https://github.com/agentzh/set-misc-nginx-module.git"
       ;;
     ngx_sphinx2_search)
-      link="https://github.com/reeteshranjan/sphinx2-nginx-module/archive/master"
+      repo="https://github.com/reeteshranjan/sphinx2-nginx-module.git"
       ;;
     *)
       echo "Error: Invalid Module"
@@ -63,14 +63,8 @@ function download_module() {
   esac
 
   mkdir -p ${WORKDIR}
-  echo -n "Downloading: ${1} ...   "
-  wget -q --no-check-certificate ${link} -O "${WORKDIR}/${1}.zip"
-  if [ ! -s "${WORKDIR}/${1}.zip" ] ; then
-    rm ${WORKDIR}/${1}.zip
-    echo -e "[\e[0;31mFAILED\e[0m]"
-  else
-    echo -e "[\e[0;32mDONE\e[0m]"
-  fi
+  echo "Downloading: ${1} ...  "
+  git clone --recursive ${repo} ${WORKDIR}/${1}
 }
 
-download_module ${1}
+fetch ${1}
