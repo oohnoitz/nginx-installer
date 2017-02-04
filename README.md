@@ -1,28 +1,33 @@
 nginx-installer
 ===============
-This installer is a simple bash script written to ease the entire process of compiling nginx with multiple patches and/or modules. This will download the specified nginx version and apply the patches and/or modules available at runtime.
+This installer is a bash script written to ease the compiling process of custom nginx installs with additional patches and/or modules. It will download the specified nginx version provided, apply any patches and/or modules available at runtime, and begin the compile and install process.
 
 ### Usage
-1. `$ git clone https://github.com/oohnoitz/nginx-installer.git`
-2. `$ chmod +x install-nginx.sh`
-3. **Save Modules**
-  1. `$ mkdir -p modules`
-  2. `$ chmod +x install-module.sh`
-  3. `$ sudo ./install-module.sh <module>`
+1. Clone the repo.
+    ```
+    $ git clone https://github.com/oohnoitz/nginx-installer.git
+    ```
 
-     The `<module>` parameter should be replaced with the name of the module in the list below.
+2. Download Modules
+   ```
+   $ ./install-module.sh <module>`
+   ```
 
-  *Note: These modules will need to be redownloaded with the script again. However, they will rename between each installation.*
+     The `<module>` parameter should be replaced with the name of a module in the list below.
 
-4. **Save Patches**
-  1. `$ mkdir -p patches`
-  2. Store all patches in the `patches` directory.
+3. Apply Patches
+   1. Create a `patches` directory.
+  	  ```
+      $ mkdir -p patches
+      ```
+   2. Store all patches in the `patches` directory.
 
-  *Note: These patches will need to be updated manually. However, they will rename between each installation.*
+4. Install!
+   ```
+   $ sudo ./install-nginx.sh <version>
+   ```
 
-5. `$ sudo ./install-nginx.sh <version>`
-
-   The `<version>` parameter should be replaced with the actual version number of nginx you wish to compile and instlal. For example, `$ sudo ./install-nginx 1.5.10` would compile and install **nginx 1.5.10** onto your server.
+   The `<version>` parameter should be replaced with the actual version number of nginx you wish to compile and install. For example, `$ sudo ./install-nginx 1.5.10` would compile and install **nginx 1.5.10** onto your server.
 
 ### List of Installable Modules
 This is an extensive list of modules that can be retrieved with the included script which will be applied to the installation automatically. If you have any requests, feel free to contribute or ask.
